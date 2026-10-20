@@ -1,0 +1,7 @@
+<suite name="Hoichoi Test Suite">
+    <test name="Hoichoi Homepage Tests">
+        <classes>
+            <class name="tests.HoichoiHomePageTest"/>
+        </classes>
+    </test>
+</suite>
