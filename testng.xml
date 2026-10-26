@@ -2,6 +2,7 @@
     <test name="Hoichoi Homepage Tests">
         <classes>
             <class name="tests.HoichoiHomePageTest"/>
+            <class name="tests.HoichoiSearchPageTest"/>
         </classes>
     </test>
 </suite>
