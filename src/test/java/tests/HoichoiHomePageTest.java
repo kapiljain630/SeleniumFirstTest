@@ -190,7 +190,82 @@ public class HoichoiHomePageTest extends BaseTest {
         System.out.println("PASS: Last card is fully visible.");
     }
 
+    @Test(priority = 17)
+    public void verifyHeroBannerIsDisplayed() {
+        Assert.assertTrue(
+            homePage.isHeroTitleDisplayed(),
+            "Hero banner title should be displayed"
+        );
+        Assert.assertTrue(
+            homePage.isHeroMuteButtonDisplayed(),
+            "Hero mute control should be displayed"
+        );
+        Assert.assertTrue(
+            homePage.hasHeroSlides(),
+            "Hero banner should expose more than one slide"
+        );
 
+        System.out.println("PASS: Hero banner, mute control, and slides are displayed.");
+    }
 
+    @Test(priority = 18)
+    public void verifyHeroSlideUpdatesTitle() {
+        Assert.assertTrue(
+            homePage.doesSecondHeroSlideUpdateTitle(),
+            "Selecting another hero slide should update the banner title"
+        );
+
+        System.out.println("PASS: Hero slide updated the banner title.");
+    }
+
+    @Test(priority = 19)
+    public void verifySubscribeLinksToPlans() {
+        Assert.assertTrue(
+            homePage.doesSubscribeLinkToPlans(),
+            "Subscribe should link to plans"
+        );
+
+        System.out.println("PASS: Subscribe links to plans.");
+    }
+
+    @Test(priority = 20)
+    public void verifyLogoLinksToHome() {
+        Assert.assertTrue(
+            homePage.doesLogoLinkToHome(),
+            "Logo should link to the home page"
+        );
+
+        System.out.println("PASS: Logo links to home.");
+    }
+
+    @Test(priority = 21)
+    public void verifyHomeNavigationIsActive() {
+        Assert.assertTrue(
+            homePage.isHomeNavigationActive(),
+            "Home should be the active navigation item"
+        );
+
+        System.out.println("PASS: Home navigation item is active.");
+    }
+
+    @Test(priority = 22)
+    public void verifyViewAllIsDisplayed() {
+        Assert.assertTrue(
+            homePage.isViewAllDisplayed(),
+            "A content tray should show View All"
+        );
+
+        System.out.println("PASS: View All is displayed.");
+    }
+
+    @Test(priority = 23)
+    public void verifyFooterIsDisplayed() {
+        Assert.assertTrue(
+            homePage.isFooterDisplayed(),
+            "Footer should show policy links and the copyright line"
+        );
+
+        System.out.println("PASS: Footer is displayed.");
+    }
 
 }

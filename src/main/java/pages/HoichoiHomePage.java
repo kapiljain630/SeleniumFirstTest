@@ -407,5 +407,90 @@ public boolean isLastCardFullyVisible() {
     return result.get(0) && result.get(1);
 }
 
+    private By heroTitle = By.cssSelector("[data-testid='hero-banner-title']");
+    private By heroMuteButton = By.cssSelector("[data-testid='hero-mute-btn']");
+    private By heroSlides = By.cssSelector("button[aria-label^='Show slide']");
+    private By activeHomeNav = By.cssSelector("[data-testid='active-nav-home']");
+    private By viewAllButton = By.cssSelector("[data-testid^='button-view-all']");
+    private By footerMenu = By.cssSelector("[data-testid='footer-menu']");
+
+    public boolean isHeroTitleDisplayed() {
+        WebElement title = driver.findElement(heroTitle);
+        return title.isDisplayed() && !title.getText().trim().isEmpty();
+    }
+
+    public boolean isHeroMuteButtonDisplayed() {
+        return driver.findElement(heroMuteButton).isDisplayed();
+    }
+
+    public boolean hasHeroSlides() {
+        return driver.findElements(heroSlides).size() >= 2;
+    }
+
+    // Select another hero slide and confirm the banner title follows it.
+    public boolean doesSecondHeroSlideUpdateTitle() {
+        List<WebElement> slides = driver.findElements(heroSlides);
+
+        if (slides.size() < 2) {
+            return false;
+        }
+
+        WebElement secondSlide = slides.get(1);
+        String label = secondSlide.getAttribute("aria-label");
+        int separator = label.indexOf(':');
+        String expectedTitle = separator >= 0
+            ? label.substring(separator + 1).trim()
+            : label.trim();
+
+        ((JavascriptExecutor) driver).executeScript(
+            "arguments[0].click();",
+            secondSlide
+        );
+
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(d ->
+            expectedTitle.equals(
+                d.findElement(heroTitle).getText().trim()
+            )
+        );
+
+        return true;
+    }
+
+    public boolean doesSubscribeLinkToPlans() {
+        WebElement subscribe = driver.findElement(
+            By.xpath("//a[normalize-space()='Subscribe']")
+        );
+        String href = subscribe.getAttribute("href");
+        return subscribe.isDisplayed()
+            && href != null
+            && href.contains("/plans");
+    }
+
+    public boolean doesLogoLinkToHome() {
+        WebElement logo = driver.findElement(pageLogo);
+        WebElement logoLink = logo.findElement(By.xpath("./ancestor::a[1]"));
+        String href = logoLink.getAttribute("href");
+        return logo.isDisplayed()
+            && href != null
+            && (href.endsWith("/") || href.endsWith("/global"));
+    }
+
+    public boolean isHomeNavigationActive() {
+        return driver.findElement(activeHomeNav).isDisplayed();
+    }
+
+    public boolean isViewAllDisplayed() {
+        List<WebElement> viewAllButtons = driver.findElements(viewAllButton);
+        return !viewAllButtons.isEmpty() && viewAllButtons.get(0).isDisplayed();
+    }
+
+    public boolean isFooterDisplayed() {
+        WebElement footer = driver.findElement(footerMenu);
+        String footerText = footer.getText();
+        return footer.isDisplayed()
+            && footerText.contains("Privacy Policy")
+            && footerText.contains("Terms Of Service")
+            && footerText.contains("All Rights Reserved");
+    }
 
 }
